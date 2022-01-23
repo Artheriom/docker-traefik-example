@@ -1,0 +1,29 @@
+[global]
+  sendAnonymousUsage = false
+
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"
+    watch = true
+    exposedByDefault = true
+    swarmMode = false
+
+[api]
+  dashboard = false
+  debug = false
+  insecure = false
+
+[entryPoints]
+  [entryPoints.insecure]
+    address = ":80"
+  [entryPoints.secure]
+    address = ":443"
+
+
+[certificatesResolvers.letsencrypt.acme]
+  email = "MY_MAIL"
+  storage = "/acme.json"
+  caServer = "https://acme-v02.api.letsencrypt.org/directory"
+  keyType = "EC256"
+  [certificatesResolvers.letsencrypt.acme.httpChallenge]
+    entryPoint = "insecure"
